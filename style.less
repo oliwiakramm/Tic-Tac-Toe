@@ -1,0 +1,721 @@
+@lightBlue: #31c3bd;
+@lightBlue-hover: #65e9e4;
+@lightYellow: #f2b137;
+@lightYellow-hover: #ffc860;
+@darkNavy: #1a2a33;
+@semiDarkNavy: #1f3641;
+@grey: #a8bfc9;
+@grey-hover: #dbe8ed;
+
+@border-radius: 0.8rem;
+
+.flex-column-center() {
+  display: flex;
+  flex-direction: column;
+}
+
+.tablet-size() {
+  width: 29rem;
+  max-width: none;
+}
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+    2. Remove default margin
+  */
+* {
+  margin: 0;
+}
+/*
+    Typographic tweaks!
+    3. Add accessible line-height
+    4. Improve text rendering
+  */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+    5. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+    6. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+    7. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+    8. Create a root stacking context
+  */
+#root,
+#__next {
+  isolation: isolate;
+}
+
+//GENERIC STYLES
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.mark--x {
+  path {
+    fill: @lightBlue;
+  }
+}
+
+.mark--o {
+  path {
+    fill: @lightYellow;
+  }
+}
+
+//STYLING
+
+body {
+  font-family: "Outfit", sans-serif;
+  min-height: 100vh;
+  font-weight: 500;
+  background-color: @darkNavy;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 0 1.5rem;
+
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: visiblity 0.3s, opacity 0.3s ease-in-out;
+  }
+
+  &.showOutcome::before {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media (min-width: 48rem) {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.start {
+  padding-top: 6rem;
+  max-width: 20rem;
+  .flex-column-center;
+  gap: 2.5rem;
+  text-align: center;
+
+  &__logo {
+    .flex-column-center;
+    align-items: center;
+    transform: translateY(-50px);
+    opacity: 0;
+    animation: slidedownshow 1s forwards;
+    img {
+      width: 4.5rem;
+    }
+  }
+
+  &__box {
+    background-color: @semiDarkNavy;
+    border-radius: 1rem;
+    padding: 1.3rem 1.5rem;
+    box-shadow: 0px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .secondaryHeading {
+    color: @grey;
+    text-transform: uppercase;
+    font-size: 1rem;
+  }
+
+  &__marks {
+    margin-top: 1.35rem;
+    border-radius: 1rem;
+    background-color: @darkNavy;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+
+  .markBtn {
+    padding: 0.7rem 3.1rem;
+    .flex-column-center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6rem;
+    background-color: @semiDarkNavy;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    flex-basis: 50%;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+
+      path {
+        fill: @grey;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.active {
+      background-color: @grey;
+      opacity: 1;
+      transition: all 0.2s ease-in-out;
+
+      path {
+        fill: @darkNavy;
+      }
+    }
+  }
+
+  &__info {
+    margin-top: 0.65rem;
+    text-transform: uppercase;
+    color: @grey;
+    opacity: 0.6;
+    font-size: 0.96rem;
+  }
+
+  &__container {
+    margin-top: -0.2rem;
+    .flex-column-center;
+    align-items: center;
+    width: 100%;
+    gap: 1.3rem;
+
+    .startBtn {
+      padding: 0.85rem 0;
+      width: 100%;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: @border-radius;
+      letter-spacing: 1px;
+      transition: background-color 0.3s ease-in-out;
+      cursor: pointer;
+      color: @darkNavy;
+
+      &:active {
+        transform: translateY(3px);
+      }
+
+      &--cpu {
+        background-color: @lightYellow;
+        box-shadow: 0px 8px rgba(242, 177, 56, 0.4);
+        transform: translateX(80px);
+        opacity: 0;
+        animation: slideleftnshow 1s 0.4s forwards;
+
+        &:hover {
+          background-color: @lightYellow-hover;
+        }
+      }
+
+      &--player {
+        background-color: @lightBlue;
+        box-shadow: 0px 8px rgba(49, 195, 189, 0.4);
+        transform: translateX(-80px);
+        opacity: 0;
+        animation: sliderigthnshow 1s 0.6s forwards;
+
+        &:hover {
+          background-color: @lightBlue-hover;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 48rem) {
+    padding-top: 0;
+
+    .tablet-size;
+
+    .startBtn {
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+.game {
+  padding-top: 3rem;
+  display: none;
+  opacity: 0;
+
+  &.turnX {
+    .game__turn {
+      .mark--x {
+        display: flex;
+      }
+
+      .mark--o {
+        display: none;
+      }
+    }
+
+    @media (hover: hover) {
+      .game__tile:hover {
+        .mark-x--outline {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.turnO {
+    .game__turn {
+      .mark--o {
+        display: flex;
+      }
+
+      .mark--x {
+        display: none;
+      }
+    }
+
+    @media (hover: hover) {
+      .game__tile:hover {
+        .mark-o--outline {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .game__logo {
+      width: 4.5rem;
+    }
+
+    .game__turn {
+      margin-right: 2rem;
+      padding: 0.5rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background-color: @semiDarkNavy;
+      border-radius: @border-radius;
+      box-shadow: 0px 4px rgba(0, 0, 0, 0.4);
+
+      svg {
+        width: 1rem;
+
+        path {
+          fill: @grey;
+        }
+      }
+
+      .game__text {
+        text-transform: uppercase;
+        font-weight: 700;
+        color: @grey;
+        font-size: 0.95rem;
+      }
+    }
+
+    .game__restartBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: @grey;
+      padding: 0.65rem;
+      border-radius: @border-radius;
+      box-shadow: 0px 4px rgba(168, 191, 201, 0.4);
+      transition: background-color 0.3s ease-in;
+      cursor: pointer;
+
+      img {
+        width: 1.2rem;
+      }
+
+      &:hover {
+        background-color: @grey-hover;
+      }
+    }
+  }
+
+  &__board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 6rem) 4.3rem;
+    margin-top: 4rem;
+    gap: 1.3rem 1.1rem;
+
+    .game__tile {
+      background-color: @semiDarkNavy;
+      border-radius: 1rem;
+      box-shadow: 0px 8px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      position: relative;
+
+      &:active {
+        transform: translateY(3px);
+        box-shadow: 0px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      &.marked {
+        pointer-events: none;
+      }
+
+      svg {
+        width: 3rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &.turnX.marked {
+        .mark--x {
+          opacity: 1;
+        }
+        .mark--o {
+          opacity: 0;
+        }
+      }
+
+      &.turnO.marked {
+        .mark--o {
+          opacity: 1;
+        }
+        .mark--x {
+          opacity: 0;
+        }
+      }
+    }
+
+    .game__results {
+      margin-top: 0.3rem;
+      border-radius: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: @darkNavy;
+      pointer-events: none;
+
+      &--x {
+        background-color: @lightBlue;
+      }
+
+      &--ties {
+        background-color: @grey;
+      }
+
+      &--o {
+        background-color: @lightYellow;
+      }
+    }
+
+    .game__text {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+    }
+
+    .game__score {
+      margin-top: -0.2rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+  }
+
+  &__outcome {
+    position: fixed;
+    padding: 4rem 0;
+    top: 30%;
+    left: 0;
+    background-color: @semiDarkNavy;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    color: @grey;
+    transform: scale(0);
+    visibility: hidden;
+    z-index: 1;
+    transition: visibility 0.5s, transform 0.5s ease-in-out;
+
+    &.show {
+      transform: scale(1);
+      visibility: visible;
+    }
+
+    .game__won {
+      display: none;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .game__info {
+      display: none;
+      align-items: center;
+      gap: 1.35rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: @lightBlue;
+      font-size: 1.45rem;
+      letter-spacing: 2px;
+    }
+
+    .game__img {
+      width: 1.7rem;
+
+      .x {
+        fill: @lightBlue;
+      }
+
+      .o {
+        fill: @lightYellow;
+      }
+    }
+
+    .game__bigText {
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .game__box {
+      margin-top: 0.4rem;
+      display: flex;
+      gap: 1rem;
+
+      .btn {
+        padding: 0.8rem 1rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 0.8rem;
+        color: @darkNavy;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in;
+
+        &.hide {
+          display: none;
+        }
+
+        &:active {
+          transform: translateY(3px);
+        }
+
+        &--quit,
+        &--cancel {
+          background-color: @grey;
+
+          box-shadow: 0px 4px rgba(168, 191, 201, 0.4);
+
+          &:hover {
+            background-color: @grey-hover;
+          }
+        }
+        &--nextRound,
+        &--restart {
+          background-color: @lightYellow;
+          box-shadow: 0px 4px rgba(242, 177, 56, 0.4);
+
+          &:hover {
+            background-color: @lightYellow-hover;
+          }
+        }
+      }
+    }
+
+    &.won {
+      .game__won {
+        display: block;
+      }
+      .game__info {
+        display: flex;
+      }
+
+      .game__bigText {
+        display: none;
+      }
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .tablet-size;
+    padding-top: 0;
+
+    .game__turn {
+      margin-right: 1.3rem;
+      padding: 0.8rem 1.8rem;
+
+      svg {
+        width: 1.3rem;
+      }
+
+      .game__text {
+        font-size: 1.1rem;
+      }
+    }
+
+    .game__restartBtn {
+      padding: 1.05rem;
+    }
+
+    &__board {
+      grid-template-rows: repeat(3, 8.3rem) 4.8rem;
+      margin-top: 1.3rem;
+      gap: 1.6rem 1.1rem;
+
+      .game__tile {
+        svg {
+          width: 4rem;
+        }
+      }
+    }
+
+    .game__results {
+      margin-top: 0.2rem;
+    }
+
+    .game__score {
+      font-size: 1.5rem;
+    }
+
+    &__outcome {
+      .game__won {
+        font-size: 1.05rem;
+      }
+
+      .game__info {
+        font-size: 2.5rem;
+      }
+
+      .game__img {
+        width: 2.5rem;
+      }
+
+      .game__bigText {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+@keyframes slidedownshow {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sliderigthnshow {
+  0% {
+    transform: translateX(-80px);
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideleftnshow {
+  0% {
+    transform: translateX(80px);
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
